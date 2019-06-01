@@ -49,7 +49,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'rubocop-rails'
-  gem "rubocop-rails_config"
+  # https://github.com/toshimaru/rubocop-rails_config/pull/43#issuecomment-497358088
+  # gem "rubocop-rails_config"
 end
 
 
