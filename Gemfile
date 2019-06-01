@@ -29,6 +29,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'rack-cors'
 
 gem 'bcrypt', '~> 3.1.13'
+gem 'jwt', '~> 2.2.1'
+
 
 group :development, :production do
   gem 'mysql2'
