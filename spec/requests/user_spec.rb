@@ -37,4 +37,34 @@ RSpec.describe 'Users API', type: :request do
             end
         end
     end
+
+    let(:user) { create(:user) }
+    let(:username) { user.username }
+
+    describe 'POST /users/#{username}' do
+        before { get "/users/#{username}", headers: valid_headers }
+
+        context 'when see the profile page' do
+            it 'returns user info' do
+                expect(json).not_to be_empty
+                expect(json['username']).to eq(username)
+            end
+
+            it 'returns status code 200' do
+                expect(response).to have_http_status(200)
+            end
+        end
+
+        context 'when the record does not exist' do
+            let(:username) { 'mantap_soul' }
+
+            it 'returns status code 404' do
+                expect(response).to have_http_status(404)
+            end
+
+            it 'returns a not found message' do
+                expect(response.body).to match(/Couldn't find User/)
+            end
+        end
+    end
 end
