@@ -55,7 +55,7 @@ RSpec.describe 'Users API', type: :request do
             end
         end
 
-        context 'when the record does not exist' do
+        context 'when user does not exist' do
             let(:username) { 'mantap_soul' }
 
             it 'returns status code 404' do
