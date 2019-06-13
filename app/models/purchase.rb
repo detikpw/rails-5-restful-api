@@ -1,5 +1,13 @@
 class Purchase < ApplicationRecord
   belongs_to :user
-  validates_presence_of :total_price, :product_ids, :user_id
+  validates_presence_of :product_ids, :user_id, :total_price
   serialize :product_ids, Array
+
+  before_validation :set_total_price, on: :create
+
+  def set_total_price
+    self.total_price = product_ids.reduce(0) { |total_price, product_id | total_price + Product.find(product_id).price }
+  end
+
+
 end
