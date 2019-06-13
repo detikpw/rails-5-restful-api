@@ -3,5 +3,6 @@ FactoryBot.define do
     factory :product do
       name { product_name }
       slug { product_name.parameterize }
+      price { rand(1_000..100_000)}
     end
 end
