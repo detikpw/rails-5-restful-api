@@ -41,7 +41,7 @@ RSpec.describe 'Users API', type: :request do
     let(:user) { create(:user) }
     let(:username) { user.username }
 
-    describe 'POST /users/#{username}' do
+    describe 'GET /users/#{username}' do
         before { get "/users/#{username}", headers: valid_headers }
 
         context 'when see the profile page' do
@@ -64,6 +64,38 @@ RSpec.describe 'Users API', type: :request do
 
             it 'returns a not found message' do
                 expect(response.body).to match(/Couldn't find User/)
+            end
+        end
+    end
+
+    let(:user) { create(:user) }
+    let(:username) { user.username }
+
+    describe 'GET /users/#{username}/history' do
+        before { get "/users/#{username}/history", headers: valid_headers }
+
+        context "when user did't purchase yet" do
+            it 'returns empty array' do
+                expect(json).to be_empty
+            end
+
+            it 'returns status code 200' do
+                expect(response).to have_http_status(200)
+            end
+        end
+
+        context 'when user had purchased' do
+            let(:products) { create_list(:product, 3) }
+            let(:sample_purchase) { Purchase.new(
+                user_id: user.id,
+                product_ids: products.map(&:id),
+            )}
+            before { sample_purchase.save! }
+            before { get "/users/#{username}/history", headers: valid_headers }
+            it 'returns purchase history info' do
+                expect(json).not_to be_empty
+                expect(json[0]['user_id']).to eq(user.id)
+                expect(json[0]['products']).not_to be_empty
             end
         end
     end

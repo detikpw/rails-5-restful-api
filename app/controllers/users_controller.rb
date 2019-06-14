@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+    before_action :set_user, only: [:show, :purchase_history]
     skip_before_action :authorize_request, only: :create
 
     def create
@@ -10,8 +11,12 @@ class UsersController < ApplicationController
     end
 
     def show
-        user = User.find_by_username!(params[:username])
-        json_response(user)
+        json_response(@user)
+    end
+
+    def purchase_history
+        # TODO Only view user's history
+        json_response(@user.purchase_history)
     end
 
     private
@@ -23,5 +28,9 @@ class UsersController < ApplicationController
             :password,
             :password_confirmation
         )
+    end
+
+    def set_user
+        @user = User.find_by_username!(params[:username])
     end
 end
