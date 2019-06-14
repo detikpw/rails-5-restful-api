@@ -6,7 +6,7 @@ class Purchase < ApplicationRecord
   before_validation :set_total_price, on: :create
 
   def set_total_price
-    self.total_price = product_ids.reduce(0) { |total_price, product_id | total_price + Product.find(product_id).price }
+    self.total_price = product_ids.reduce(0) { |total_price, product_id | total_price + Product.find(product_id).price } if attribute_present?("product_ids")
   end
 
 
