@@ -14,7 +14,8 @@ Product.destroy_all
         name: product_name,
         slug: product_name.parameterize,
         description: Faker::Football.team,
-        image: Faker::LoremPixel.image("50x60", false, 'sports')
+        image: Faker::LoremPixel.image("50x60", false, 'sports'),
+        price: rand(1_000..10_000)
     )
 end
 
