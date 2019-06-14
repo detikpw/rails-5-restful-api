@@ -2,6 +2,7 @@ class Product < ApplicationRecord
     validates_presence_of :name, :slug, :price
     before_validation :create_slug
 
+    # TODO search use any part of word
     searchkick
 
     private

@@ -10,4 +10,5 @@ Rails.application.routes.draw do
 
   post 'login', to: 'authentication#authenticate'
   post 'register', to: 'users#create'
+  get 'search', to: 'products#search'
 end
