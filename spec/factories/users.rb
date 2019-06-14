@@ -1,7 +1,7 @@
 FactoryBot.define do
     factory :user do
       username { Faker::TvShows::GameOfThrones.character.parameterize }
-      email {'aladdin@jasmine.com'}
+      email {Faker::Internet.email}
       password {'genie'}
     end
 end
